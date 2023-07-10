@@ -6,25 +6,32 @@
 </head>
 <body>
 <p th:text="${person.getPerson_name() + ', ' + person.getBirth_year()}">VALUE</p>
-<div th:if="${people.isEmpty()}" th:text="${'Person do not have any book'}" ></div>
-<div th:if="${people.isEmpty()}" ><br></div>
-<div th:if="${people.isEmpty() == false}" th:text="${'Books: '}">text</div>
-<div th:if="${people.isEmpty() == false}"><hr></div>
-<div th:if="${people.isEmpty() == false}" th:each="book : ${books}">
-    <div th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
-+ book.getYear_of_writing()}" th:if="${book.getPerson_id() == person.getPerson_id()}">Book</div>
+
+<div th:if="${books.isEmpty()}">
+    <p>Человек еще не брал книги</p>
+    <hr/>
 </div>
-<div th:if="${people.isEmpty() == false}">
-    <hr>
+
+<div th:if="${!books.isEmpty()}">
+    <hr/>
+    <b>Книги:</b>
+    <br/>
+    <table th:each="book : ${books}">
+        <tr th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
+        + book.getYear_of_writing()}">Book
+        </tr>
+    </table>
+    <hr/>
 </div>
-<form  th:action="@{/people/{id}/edit(id=${person.getPerson_id()})}">
+
+<form th:action="@{/people/{id}/edit(id=${person.getPerson_id()})}">
     <input type="submit" value="Edit"/>
 </form>
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getPerson_id()})}">
     <input type="submit" value="Delete"/>
 </form>
 <br>
-<form  action="/people">
+<form action="/people">
     <input type="submit" value="Back to people list"/>
 </form>
 </body>

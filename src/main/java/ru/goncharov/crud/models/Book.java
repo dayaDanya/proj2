@@ -17,10 +17,10 @@ public class Book {
     @Id
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int book_id;
+    private int bookId;
 
     @ManyToOne
-    @JoinColumn(name = "parent_id")
+    @JoinColumn(name = "person_id")
     private Person person;
     @Size(max = 100, message = "name of book might not be larger than 100 characters")
     @Column(name = "book_name")
@@ -38,20 +38,19 @@ public class Book {
     public Book() {
     }
 
-    public Book(int book_id, Person person, String book_name, String author, int year_of_writing) {
-        this.book_id = book_id;
+    public Book(int bookId, Person person, String book_name, String author, int year_of_writing) {
+        this.person = person;
         this.book_name = book_name;
         this.author = author;
         this.year_of_writing = year_of_writing;
-        this.person = person;
     }
 
-    public int getBook_id() {
-        return book_id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public Person getPerson() {

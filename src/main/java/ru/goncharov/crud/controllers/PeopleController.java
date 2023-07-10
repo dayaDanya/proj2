@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.goncharov.crud.dao.BookDAO;
 import ru.goncharov.crud.models.Person;
+import ru.goncharov.crud.services.BooksService;
 import ru.goncharov.crud.services.PeopleService;
 
 
@@ -20,12 +20,12 @@ import javax.validation.Valid;
 public class PeopleController {
 
     private final PeopleService peopleService;
-    private final BookDAO bookDAO;
+    private final BooksService booksService;
 
     @Autowired
-    public PeopleController(PeopleService peopleService, BookDAO bookDAO) {
+    public PeopleController(PeopleService peopleService, BooksService booksService) {
         this.peopleService = peopleService;
-        this.bookDAO = bookDAO;
+        this.booksService = booksService;
     }
 
     @GetMapping()
@@ -36,7 +36,9 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("person", peopleService.findOne(id));
+        Person person = peopleService.findOne(id);
+        model.addAttribute("person", person);
+        model.addAttribute("books", booksService.findByPerson(person));
         return "people/show";
     }
 

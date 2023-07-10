@@ -3,6 +3,7 @@ package ru.goncharov.crud.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.goncharov.crud.models.Book;
 import ru.goncharov.crud.models.Person;
 import ru.goncharov.crud.repositories.PeopleRepository;
 
@@ -43,4 +44,6 @@ public class PeopleService {
     public void delete(int id) {
         peopleRepository.deleteById(id);
     }
+
+
 }
