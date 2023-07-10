@@ -5,12 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.goncharov.crud.models.Book;
 import ru.goncharov.crud.models.Person;
 import ru.goncharov.crud.services.BooksService;
 import ru.goncharov.crud.services.PeopleService;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Neil Alishev
@@ -35,10 +37,12 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model,
+                       @ModelAttribute("book") Book book) {
         Person person = peopleService.findOne(id);
         model.addAttribute("person", person);
         model.addAttribute("books", booksService.findByPerson(person));
+        model.addAttribute("freeBooks", booksService.findByPerson(null));
         return "people/show";
     }
 
@@ -77,5 +81,11 @@ public class PeopleController {
     public String delete(@PathVariable("id") int id) {
         peopleService.delete(id);
         return "redirect:/people";
+    }
+    @PatchMapping("/{id}/updateBooks")
+    public String updateBooks(@ModelAttribute("book") Book book,
+                              @PathVariable("id") int id){
+        booksService.updatePersonId(book.getBookId(), id);
+        return "redirect:/people/{id}";
     }
 }
