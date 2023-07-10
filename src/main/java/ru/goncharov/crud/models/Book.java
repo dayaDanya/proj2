@@ -30,10 +30,10 @@ public class Book {
     // @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+", message = "example: Alexander Pushkin")
     @Column(name = "author")
     private String author;
-    @NotNull(message = "write year of birth please")
+    @NotNull(message = "write year of writing please")
     @Max(value = 2023, message = "year of writing should not be larger than current: 2023")
     @Column(name = "year_of_writing")
-    private int year_of_writing;
+    private int yearOfWriting;
 
     public Book() {
     }
@@ -42,7 +42,7 @@ public class Book {
         this.person = person;
         this.book_name = book_name;
         this.author = author;
-        this.year_of_writing = year_of_writing;
+        this.yearOfWriting = year_of_writing;
     }
 
     public int getBookId() {
@@ -78,10 +78,10 @@ public class Book {
     }
 
     public int getYear_of_writing() {
-        return year_of_writing;
+        return yearOfWriting;
     }
 
     public void setYear_of_writing(int year_of_writing) {
-        this.year_of_writing = year_of_writing;
+        this.yearOfWriting = year_of_writing;
     }
 }

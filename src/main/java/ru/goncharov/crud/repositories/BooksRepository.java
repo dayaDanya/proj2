@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.goncharov.crud.models.Book;
 import ru.goncharov.crud.models.Person;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Repository
