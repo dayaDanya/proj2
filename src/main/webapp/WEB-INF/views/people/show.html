@@ -19,25 +19,24 @@
     <br/>
     <table th:each="book : ${books}">
         <tr th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
-        + book.getYear_of_writing()}">Book
+        + book.getYearOfWriting()}">Book
         </tr>
     </table>
     <hr/>
 </div>
-<form th:if="${!freeBooks.isEmpty()}" th:method="PATCH" th:action="@{/people/{id}/updateBooks(id=${person.getPerson_id()})}"
+<form th:if="${!freeBooks.isEmpty()}" th:method="PATCH"
+      th:action="@{/people/{id}/updateBooks(id=${person.getPerson_id()})}"
       th:object="${person}">
     <b>Список свободных книг</b>
     <br/>
     <select th:object="${book}" th:field="*{bookId}" id="book">
         <option th:each="book : ${freeBooks}" th:value="${book.getBookId()}"
-                th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', ' + book.getYear_of_writing()}"></option>
+                th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', ' + book.getYearOfWriting()}"></option>
     </select>
     <input type="submit" value="Give a book">
 </form>
 
-<div th:if="${freeBooks.isEmpty()}">
-    <p>Свободных книг нет</p>
-</div>
+
 
 <br>
 <form th:action="@{/people/{id}/edit(id=${person.getPerson_id()})}">

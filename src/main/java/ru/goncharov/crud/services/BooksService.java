@@ -10,6 +10,7 @@ import ru.goncharov.crud.models.Book;
 import ru.goncharov.crud.models.Person;
 import ru.goncharov.crud.repositories.BooksRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,20 @@ public class BooksService {
 
         }
         return null;
+    }
+    public List<Book> search(String searchQuery){
+        List<Book> foundBooks = new ArrayList<>();
+        for(Book book : booksRepository.findAll()){
+            Hibernate.initialize(book);
+            if(book.getBook_name().toLowerCase().contains(searchQuery.toLowerCase()) ||
+            book.getAuthor().toLowerCase().contains(searchQuery.toLowerCase()) ||
+            String.valueOf(book.getYearOfWriting()).contains(searchQuery.toLowerCase()) ||
+                    searchQuery.toLowerCase().contains(book.getBook_name().toLowerCase()) ||
+                    searchQuery.toLowerCase().contains(book.getAuthor().toLowerCase()) ||
+                    searchQuery.contains(String.valueOf(book.getYearOfWriting())))
+                foundBooks.add(book);
+        }
+        return foundBooks;
     }
 
     @Transactional

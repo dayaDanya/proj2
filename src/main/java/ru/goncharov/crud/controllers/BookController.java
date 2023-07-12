@@ -13,6 +13,8 @@ import ru.goncharov.crud.services.BooksService;
 import ru.goncharov.crud.services.PeopleService;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,9 +35,6 @@ public class BookController {
                         @RequestParam(value = "booksPerPage", required = false) Integer booksPerPage,
                         @RequestParam(value = "sortParam", required = false) String sortParam,
                         Model model) {
-        System.out.println(page);
-        System.out.println(booksPerPage);
-        System.out.println(sortParam);
         model.addAttribute("books", booksService.findAll(page, booksPerPage, sortParam));
         return "/books/index";
     }
@@ -44,6 +43,19 @@ public class BookController {
     @GetMapping("/new")
     public String newBook(@ModelAttribute("book") Book book) {
         return "books/new";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "searchQuery", required = false) String searchQuery, Model model){
+        model.addAttribute("searchQuery", searchQuery);
+        if(searchQuery != null) {
+            List<Book> foundBooks = booksService.search(searchQuery);
+//            model.addAttribute("book", book);
+//            model.addAttribute("person", booksService
+//                    .findPersonByBook(Optional.ofNullable(book)));
+            model.addAttribute("foundBooks", foundBooks);
+        }
+        return "books/search";
     }
 
     @PostMapping()

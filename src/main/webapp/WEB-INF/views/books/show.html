@@ -6,8 +6,10 @@
 </head>
 <body>
 <p th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
-+ book.getYear_of_writing()}">VALUE</p>
++ book.getYearOfWriting()}">VALUE</p>
+
 <p th:if="${book.getPerson() == null}">Book don't have a reader</p>
+
 <div th:if="${book.getPerson() != null}">
     <div th:text="${owner.getPerson_name() + ' has a book now'}">VALUE</div>
 </div>

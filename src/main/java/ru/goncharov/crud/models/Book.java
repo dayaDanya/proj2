@@ -77,11 +77,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getYear_of_writing() {
+    public int getYearOfWriting() {
         return yearOfWriting;
     }
 
-    public void setYear_of_writing(int year_of_writing) {
+    public void setYearOfWriting(int year_of_writing) {
         this.yearOfWriting = year_of_writing;
     }
 }
