@@ -11,7 +11,12 @@
 <p th:if="${book.getPerson() == null}">Book don't have a reader</p>
 
 <div th:if="${book.getPerson() != null}">
-    <div th:text="${owner.getPerson_name() + ' has a book now'}">VALUE</div>
+    <p>
+        Сейчас книга у:
+        <a th:href="@{/people/{id}(id=${owner.getPerson_id()})}"
+           th:text="${owner.getPerson_name()}">VALUE</a>
+    </p>
+
 </div>
 <br>
 <form th:method="PATCH" th:action="@{/books/{id}/deleteID(id=${book.getBookId()})}"

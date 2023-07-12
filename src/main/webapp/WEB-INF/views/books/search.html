@@ -16,10 +16,16 @@
 
     <h3 th:text="${'Результатов: ' + foundBooks.size()}">result of search</h3>
     <div th:each="book : ${foundBooks}">
-        <p th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
-+ book.getYearOfWriting()}">text</p>
-        <p th:if="${book.getPerson() != null}"
-           th:text="${'Сейчас книга у: ' + book.getPerson().getPerson_name() }">text</p>
+        <a th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
++ book.getYearOfWriting()}"
+           th:href="@{/books/{id}(id=${book.getBookId()})}">text</a>
+        <br>
+        <p>Сейчас книга у:
+            <a th:if="${book.getPerson() != null}"
+               th:text="${book.getPerson().getPerson_name()}"
+               th:href="@{/people/{id}(id=${book.getPerson().getPerson_id()})}">text</a>
+        </p>
+
         <p th:if="${book.getPerson() == null}"
            th:text="${'Книга свободна'}">text</p>
         <hr>

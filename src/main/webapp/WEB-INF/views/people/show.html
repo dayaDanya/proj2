@@ -18,9 +18,10 @@
     <b>Список книг выданных читателю</b>
     <br/>
     <table th:each="book : ${books}">
-        <tr th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
-        + book.getYearOfWriting()}">Book
-        </tr>
+        <a th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
+        + book.getYearOfWriting()}"
+        th:href="@{/books/{id}(id=${book.getBookId()})}">Book
+        </a>
     </table>
     <hr/>
 </div>
