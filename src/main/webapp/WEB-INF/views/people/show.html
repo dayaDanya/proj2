@@ -18,9 +18,13 @@
     <b>Список книг выданных читателю</b>
     <br/>
     <table th:each="book : ${books}">
-        <a th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
+        <a th:if="${book.isOverdue()}" style="color:red" th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
         + book.getYearOfWriting()}"
         th:href="@{/books/{id}(id=${book.getBookId()})}">Book
+        </a>
+        <a th:if="${!book.isOverdue()}" th:text="${book.getBook_name() + ', ' + book.getAuthor() + ', '
+        + book.getYearOfWriting()}"
+           th:href="@{/books/{id}(id=${book.getBookId()})}">Book
         </a>
     </table>
     <hr/>

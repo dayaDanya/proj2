@@ -10,7 +10,10 @@ import ru.goncharov.crud.models.Book;
 import ru.goncharov.crud.models.Person;
 import ru.goncharov.crud.repositories.BooksRepository;
 
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,17 +84,35 @@ public class BooksService {
     }
 
     @Transactional
-    public void updatePersonId(int bookId, int personId) {
-        booksRepository.updatePersonId(bookId, personId);
+    public void updatePersonId(Book book, int personId) {
+        //book.setDateOfIssue(new Date());
+        //System.out.println(book.getDateOfIssue());
+        updateDateOfIssue(book, new Date());
+        booksRepository.updatePersonId(book.getBookId(), personId);
     }
 
     @Transactional
     public void deletePersonId(int bookId) {
         booksRepository.deletePersonId(bookId);
     }
+    @Transactional
+    void updateDateOfIssue(Book book, Date date){
+        booksRepository.updateDateOfIssue(book.getBookId(), date);
+    }
 
     public List<Book> findByPerson(Person person) {
-        return booksRepository.findByPerson(person);
+        List<Book> books = booksRepository.findByPerson(person);
+        Date curDate = new Date();
+        for(Book book : books){
+            Period period = Period.between(
+            book.getDateOfIssue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    curDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+            );
+            int days = period.getDays();
+            book.setOverdue(days >= 10);
+
+        }
+        return books;
     }
 
 }

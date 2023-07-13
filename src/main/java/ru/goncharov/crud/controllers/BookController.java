@@ -87,7 +87,7 @@ public class BookController {
     @PatchMapping("/{id}/updateID")
     public String updatePerson_id(@ModelAttribute("person") Person person,
                                   @PathVariable("id") int id) {
-        booksService.updatePersonId(id, person.getPerson_id());
+        booksService.updatePersonId(booksService.findOne(id), person.getPerson_id());
         return "redirect:/books/{id}";
     }
 

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.goncharov.crud.models.Book;
 import ru.goncharov.crud.models.Person;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -24,4 +25,9 @@ public interface BooksRepository extends JpaRepository<Book, Integer> {
     @Transactional
     @Query("UPDATE Book b SET b.person = null WHERE b.id = :bookId")
     void deletePersonId(@Param("bookId") int bookId);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Book SET date_of_issue = ?2 WHERE id = ?1")
+    void updateDateOfIssue(int id, Date date);
+
 }

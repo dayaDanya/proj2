@@ -6,10 +6,8 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name = "Book")
@@ -35,14 +33,24 @@ public class Book {
     @Column(name = "year_of_writing")
     private int yearOfWriting;
 
+
+    @Column(name="date_of_issue", updatable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfIssue;
+
+
+    @Transient
+    private boolean overdue;
+
     public Book() {
     }
 
-    public Book(int bookId, Person person, String book_name, String author, int year_of_writing) {
+    public Book(int bookId, Person person, String book_name, String author, int year_of_writing, Date dateOfIssue, boolean overdue) {
         this.person = person;
         this.book_name = book_name;
         this.author = author;
         this.yearOfWriting = year_of_writing;
+        this.dateOfIssue = dateOfIssue;
     }
 
     public int getBookId() {
@@ -83,5 +91,21 @@ public class Book {
 
     public void setYearOfWriting(int year_of_writing) {
         this.yearOfWriting = year_of_writing;
+    }
+
+    public Date getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+    public boolean isOverdue() {
+        return overdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        this.overdue = overdue;
     }
 }

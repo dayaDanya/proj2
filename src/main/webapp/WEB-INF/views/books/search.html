@@ -20,9 +20,8 @@
 + book.getYearOfWriting()}"
            th:href="@{/books/{id}(id=${book.getBookId()})}">text</a>
         <br>
-        <p>Сейчас книга у:
-            <a th:if="${book.getPerson() != null}"
-               th:text="${book.getPerson().getPerson_name()}"
+        <p th:if="${book.getPerson() != null}">Сейчас книга у:
+            <a th:text="${book.getPerson().getPerson_name()}"
                th:href="@{/people/{id}(id=${book.getPerson().getPerson_id()})}">text</a>
         </p>
 
